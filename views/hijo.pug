@@ -1,0 +1,17 @@
+doctype html
+html 
+    head 
+        title= `${title}`
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/style.css")
+    body
+        .content
+            h1.index hijo
+            a(href="/create") Create/Update 
+            .cards 
+                each hijo in data
+                    .card 
+                        h2.card__nombre Nombre: #{hijo.properties.nombre}
+                        p.card__edad Identificacion: #{hijo.properties.identificacion}
+                        p.card__edad Edad: #{hijo.properties.edad}
+                        p.card__sexo Sexo: #{hijo.properties.sexo}

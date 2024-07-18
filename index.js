@@ -13,15 +13,15 @@ const PRIVATE_APP_ACCESS = '';
 // TODO: ROUTE 1 - Create a new app.get route for the homepage to call your custom object data. Pass this data along to the front-end and create a new pug template in the views folder.
 
 app.get('/', async (req, res) => {
-    const Hijos = 'https://api.hubspot.com/crm/v3/objects/2-32314521?properties=developer,game_genre,name';
+    const hijo = 'https://api.hubspot.com/crm/v3/objects/2-32314521?properties=nombre,edad,sexo';
     const headers = {
         Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
         'Content-Type': 'application/json'
     }
     try {
-        const resp = await axios.get(Hijos, { headers });
+        const resp = await axios.get(hijo, { headers });
         const data = resp.data.results;
-        res.render('Hijos', { title: 'Hijos | HubSpot APIs', data });
+        res.render('hijo', { title: 'hijo | HubSpot APIs', data });
     } catch (error) {
         console.error(error);
     }
@@ -43,9 +43,9 @@ app.get('/create', async (req, res) => {
 app.post('/create', async (req, res) => {
     const create = {
         properties: {
-            "name": req.body.name,
-            "developer": req.body.developer,
-            "game_genre": req.body.game_genre
+            "nombre": req.body.nombre,
+            "edad": req.body.edad,
+            "sexo": req.body.sexo
         }
     }
 
@@ -54,11 +54,11 @@ app.post('/create', async (req, res) => {
         'Content-Type': 'application/json'
     };
 
-    const name = req.body.name;
-    const searchVideoGame = `https://api.hubspot.com/crm/v3/objects/2-32314521/${name}?idProperty=name`
+    const identificacion = req.body.identificacion;
+    const searchhijo = `https://api.hubspot.com/crm/v3/objects/2-32314521/${identificacion}?idProperty=identificacion`
     let updateId;
     try {
-        const resp = await axios.get(searchHijos, { headers });
+        const resp = await axios.get(searchhijo, { headers });
         const data = resp.data;
         updateId = data.id;
     } catch (error) {
@@ -66,18 +66,18 @@ app.post('/create', async (req, res) => {
     }
 
     if (!updateId) {
-        const createHijos = `https://api.hubapi.com/crm/v3/objects/2-32314521`;
+        const createhijo = `https://api.hubapi.com/crm/v3/objects/2-32314521`;
         try {
-            const response = await axios.post(createHijos, create, { headers });
+            const response = await axios.post(createhijo, create, { headers });
             res.redirect('/');
         } catch (err) {
             res.redirect('/');
             console.error(err);
         }
     } else {
-        const updateHijos = `https://api.hubapi.com/crm/v3/objects/2-32314521/${updateId}`;
+        const updatehijo = `https://api.hubapi.com/crm/v3/objects/2-32314521/${updateId}`;
         try {
-            const response = await axios.patch(updateHijos, create, { headers });
+            const response = await axios.patch(updatehijo, create, { headers });
             res.redirect('/');
         } catch (err) {
             res.redirect('/');
